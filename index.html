@@ -8,49 +8,71 @@
     <style>
         /* --- ALLGEMEINE SEITENEINSTELLUNGEN --- */
         body {
-            font-family: "Times New Roman", Times, serif; /* Auf Times New Roman umgestellt */
+            font-family: "Times New Roman", Times, serif; /* Schriftart Times New Roman */
             display: flex;                  /* Aktiviert die flexible Zentrierung */
-            justify-content: center;        /* Zentriert die Box horizontal (links/rechts) */
-            align-items: center;            /* Zentriert die Box vertikal (oben/unten) */
-            height: 100vh;                  /* Nutzt 100% der Bildschirmhöhe */
-            margin: 0;                      /* Entfernt standardmäßige Außenabstände des Browsers */
-            background-color: #f4f4f9;      /* Hintergrundfarbe der gesamten Seite (Hellgrau) */
-            color: #333;                    /* Standard-Textfarbe (Dunkelgrau, fast Schwarz) */
+            justify-content: center;        /* Zentriert die gesamte Box horizontal */
+            align-items: center;            /* Zentriert die gesamte Box vertikal */
+            height: 100vh;                  /* Nutzt die volle Bildschirmhöhe */
+            margin: 0;                      
+            background-color: #f4f4f9;      /* Hellgrauer Hintergrund */
+            color: #333;                    /* Dunkelgraue Schrift */
         }
 
         /* --- DIE WEISSE BANNER-BOX (CONTAINER) --- */
         .container {
-            text-align: center;             /* Zentriert alle Texte und Bilder innerhalb der Box */
-            padding: 30px;                  /* Innenabstand zwischen Inhalt und Box-Rand */
             background: white;              /* Hintergrundfarbe der Box */
-            border-radius: 12px;            /* Rundung der Box-Ecken (höherer Wert = runder) */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sanfter Schattenwurf um die Box */
-            max-width: 400px;               /* Maximale Breite der Box auf großen Bildschirmen */
-            width: 90%;                     /* Sorgt dafür, dass die Box auf dem Handy schmaler wird */
+            padding: 40px;                  /* Innenabstand der Box */
+            border-radius: 12px;            /* Abrundung der Box-Ecken */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sanfter Schatten um die Box */
+            max-width: 500px;               /* Box etwas breiter gemacht für das Nebeneinander-Layout */
+            width: 90%;                     
+        }
+
+        /* --- HAUPTÜBERSCHRIFT (GANZ OBEN) --- */
+        h1 { 
+            font-family: "Times New Roman", Times, serif;
+            margin-top: 0;                  /* Entfernt den Abstand nach oben */
+            margin-bottom: 25px;            /* Abstand nach unten zum Profilbereich */
+            font-size: 32px;                /* Große, markante Überschrift */
+            text-align: left;               /* Linksbündig für einen modernen Look */
+            border-bottom: 1px solid #eee;  /* Eine feine Trennlinie unter dem Namen */
+            padding-bottom: 10px;
+        }
+
+        /* --- PROFIL-BEREICH (Bild links, Titel rechts) --- */
+        .profile-row {
+            display: flex;                  /* Bringt Bild und Titel nebeneinander */
+            align-items: center;            /* Zentriert Bild und Titel vertikal zueinander */
+            gap: 20px;                      /* Abstand zwischen Bild und Text */
+            margin-bottom: 25px;            /* Abstand nach unten zum "Über mich"-Text */
         }
 
         /* --- PROFILBILD-STYLING --- */
         .profile-img {
-            width: 150px;                   /* Breite des Bildes in Pixeln */
-            height: 150px;                  /* Höhe des Bildes in Pixeln */
-            border-radius: 50%;             /* Macht das Bild kreisrund (bei 0% wäre es quadratisch) */
-            object-fit: cover;              /* Schneidet das Bild perfekt zu, falls es nicht quadratisch war */
-            border: 3px solid #333;         /* Die feine Linie um das Bild (Dicke, Stil, Farbe) */
-            margin-bottom: 15px;            /* Abstand nach unten zum Namen */
+            width: 130px;                   /* Breite des Bildes */
+            height: 130px;                  /* Höhe des Bildes */
+            border-radius: 50%;             /* Macht das Bild kreisrund */
+            object-fit: cover;              /* Verhindert Verzerrungen */
+            border: 2px solid #333;         /* Dunkler Rahmen um das Bild */
+            flex-shrink: 0;                 /* Verhindert, dass das Bild auf Handys gequetscht wird */
         }
 
-        /* --- TEXT-STYLING --- */
-        h1 { 
-            font-family: "Times New Roman", Times, serif; /* Zur Sicherheit auch hier definiert */
-            margin: 10px 0;                 /* Abstand der Hauptüberschrift (10px oben/unten, 0px links/rechts) */
-            font-size: 28px;                /* Schriftgröße deines Namens (bei Times etwas größer, da sie schmaler wirkt) */
+        /* --- TITEL (ENGINEER @ BMW) --- */
+        .job-title {
+            font-size: 22px;                /* Schriftgröße für den Beruf */
+            font-weight: bold;              /* Fett gedruckt */
+            color: #1c1c1c;                 
+            text-align: left;               /* Linksbündig ausgerichtet */
         }
-        
-        p { 
-            font-family: "Times New Roman", Times, serif; /* Zur Sicherheit auch hier definiert */
-            color: #666;                    /* Etwas helleres Grau für den Beschreibungstext */
-            font-size: 18px;                /* Schriftgröße des Beschreibungstextes */
-            line-height: 1.5;               /* Zeilenabstand, falls der Text mehrzeilig wird */
+
+        /* --- ÜBER MICH TEXT (GANZ UNTEN) --- */
+        .about-text { 
+            font-family: "Times New Roman", Times, serif;
+            color: #555;                    /* Etwas weicheres Grau für Fließtext */
+            font-size: 18px;                /* Angenehme Lesegröße */
+            line-height: 1.6;               /* Höherer Zeilenabstand für bessere Lesbarkeit */
+            text-align: left;               /* Linksbündiger Fließtext */
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -58,13 +80,12 @@
 
     <div class="container">
         
-        <img src="profilbild.jpg" alt="Maximilian Winnecke" class="profile-img">
-        
         <h1>Maximilian Winnecke</h1>
         
-        <p>Hier entsteht meine persönliche Website. Schau bald wieder vorbei!</p>
+        <div class="profile-row">
+            <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
+            
+            <div class="job-title">Engineer @ BMW</div>
+        </div>
         
-    </div>
-
-</body>
-</html>
+        <p class="about-text
