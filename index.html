@@ -4,32 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maximilian Winnecke</title>
+    
     <style>
+        /* --- ALLGEMEINE SEITENEINSTELLUNGEN --- */
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: "Times New Roman", Times, serif; /* Auf Times New Roman umgestellt */
+            display: flex;                  /* Aktiviert die flexible Zentrierung */
+            justify-content: center;        /* Zentriert die Box horizontal (links/rechts) */
+            align-items: center;            /* Zentriert die Box vertikal (oben/unten) */
+            height: 100vh;                  /* Nutzt 100% der Bildschirmhöhe */
+            margin: 0;                      /* Entfernt standardmäßige Außenabstände des Browsers */
+            background-color: #f4f4f9;      /* Hintergrundfarbe der gesamten Seite (Hellgrau) */
+            color: #333;                    /* Standard-Textfarbe (Dunkelgrau, fast Schwarz) */
         }
+
+        /* --- DIE WEISSE BANNER-BOX (CONTAINER) --- */
         .container {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;             /* Zentriert alle Texte und Bilder innerhalb der Box */
+            padding: 30px;                  /* Innenabstand zwischen Inhalt und Box-Rand */
+            background: white;              /* Hintergrundfarbe der Box */
+            border-radius: 12px;            /* Rundung der Box-Ecken (höherer Wert = runder) */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sanfter Schattenwurf um die Box */
+            max-width: 400px;               /* Maximale Breite der Box auf großen Bildschirmen */
+            width: 90%;                     /* Sorgt dafür, dass die Box auf dem Handy schmaler wird */
         }
-        h1 { margin-bottom: 10px; }
-        p { color: #666; }
+
+        /* --- PROFILBILD-STYLING --- */
+        .profile-img {
+            width: 150px;                   /* Breite des Bildes in Pixeln */
+            height: 150px;                  /* Höhe des Bildes in Pixeln */
+            border-radius: 50%;             /* Macht das Bild kreisrund (bei 0% wäre es quadratisch) */
+            object-fit: cover;              /* Schneidet das Bild perfekt zu, falls es nicht quadratisch war */
+            border: 3px solid #333;         /* Die feine Linie um das Bild (Dicke, Stil, Farbe) */
+            margin-bottom: 15px;            /* Abstand nach unten zum Namen */
+        }
+
+        /* --- TEXT-STYLING --- */
+        h1 { 
+            font-family: "Times New Roman", Times, serif; /* Zur Sicherheit auch hier definiert */
+            margin: 10px 0;                 /* Abstand der Hauptüberschrift (10px oben/unten, 0px links/rechts) */
+            font-size: 28px;                /* Schriftgröße deines Namens (bei Times etwas größer, da sie schmaler wirkt) */
+        }
+        
+        p { 
+            font-family: "Times New Roman", Times, serif; /* Zur Sicherheit auch hier definiert */
+            color: #666;                    /* Etwas helleres Grau für den Beschreibungstext */
+            font-size: 18px;                /* Schriftgröße des Beschreibungstextes */
+            line-height: 1.5;               /* Zeilenabstand, falls der Text mehrzeilig wird */
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
+        
+        <img src="profilbild.jpg" alt="Maximilian Winnecke" class="profile-img">
+        
         <h1>Maximilian Winnecke</h1>
+        
         <p>Hier entsteht meine persönliche Website. Schau bald wieder vorbei!</p>
+        
     </div>
+
 </body>
 </html>
