@@ -8,71 +8,97 @@
     <style>
         /* --- ALLGEMEINE SEITENEINSTELLUNGEN --- */
         body {
-            font-family: "Times New Roman", Times, serif; /* Schriftart Times New Roman */
-            display: flex;                  /* Aktiviert die flexible Zentrierung */
-            justify-content: center;        /* Zentriert die gesamte Box horizontal */
-            align-items: center;            /* Zentriert die gesamte Box vertikal */
-            height: 100vh;                  /* Nutzt die volle Bildschirmhöhe */
+            font-family: "Times New Roman", Times, serif;
+            display: flex;                  
+            justify-content: center;        
+            align-items: center;            
+            height: 100vh;                  
             margin: 0;                      
-            background-color: #f4f4f9;      /* Hellgrauer Hintergrund */
-            color: #333;                    /* Dunkelgraue Schrift */
+            background-color: #f4f4f9;      
+            color: #333;                    
         }
 
-        /* --- DIE WEISSE BANNER-BOX (CONTAINER) --- */
+        /* --- DIE WEISSE BANNER-BOX --- */
         .container {
-            background: white;              /* Hintergrundfarbe der Box */
-            padding: 40px;                  /* Innenabstand der Box */
-            border-radius: 12px;            /* Abrundung der Box-Ecken */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sanfter Schatten um die Box */
-            max-width: 500px;               /* Box etwas breiter gemacht für das Nebeneinander-Layout */
+            background: white;              
+            padding: 40px;                  
+            border-radius: 12px;            
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            max-width: 500px;               
             width: 90%;                     
         }
 
-        /* --- HAUPTÜBERSCHRIFT (GANZ OBEN) --- */
+        /* --- HAUPTÜBERSCHRIFT --- */
         h1 { 
             font-family: "Times New Roman", Times, serif;
-            margin-top: 0;                  /* Entfernt den Abstand nach oben */
-            margin-bottom: 25px;            /* Abstand nach unten zum Profilbereich */
-            font-size: 32px;                /* Große, markante Überschrift */
-            text-align: left;               /* Linksbündig für einen modernen Look */
-            border-bottom: 1px solid #eee;  /* Eine feine Trennlinie unter dem Namen */
+            margin-top: 0;                  
+            margin-bottom: 25px;            
+            font-size: 32px;                
+            text-align: left;               
+            border-bottom: 1px solid #eee;  
             padding-bottom: 10px;
         }
 
-        /* --- PROFIL-BEREICH (Bild links, Titel rechts) --- */
+        /* --- PROFIL-BEREICH (Bild & Titel) --- */
         .profile-row {
-            display: flex;                  /* Bringt Bild und Titel nebeneinander */
-            align-items: center;            /* Zentriert Bild und Titel vertikal zueinander */
-            gap: 20px;                      /* Abstand zwischen Bild und Text */
-            margin-bottom: 25px;            /* Abstand nach unten zum "Über mich"-Text */
+            display: flex;                  
+            align-items: center;            
+            gap: 20px;                      
+            margin-bottom: 25px;            
         }
 
-        /* --- PROFILBILD-STYLING --- */
+        /* --- PROFILBILD --- */
         .profile-img {
-            width: 130px;                   /* Breite des Bildes */
-            height: 130px;                  /* Höhe des Bildes */
-            border-radius: 50%;             /* Macht das Bild kreisrund */
-            object-fit: cover;              /* Verhindert Verzerrungen */
-            border: 2px solid #333;         /* Dunkler Rahmen um das Bild */
-            flex-shrink: 0;                 /* Verhindert, dass das Bild auf Handys gequetscht wird */
+            width: 130px;                   
+            height: 130px;                  
+            border-radius: 50%;             
+            object-fit: cover;              
+            border: 2px solid #333;         
+            flex-shrink: 0;                 
         }
 
-        /* --- TITEL (ENGINEER @ BMW) --- */
+        /* --- TITEL --- */
         .job-title {
-            font-size: 22px;                /* Schriftgröße für den Beruf */
-            font-weight: bold;              /* Fett gedruckt */
+            font-size: 22px;                
+            font-weight: bold;              
             color: #1c1c1c;                 
-            text-align: left;               /* Linksbündig ausgerichtet */
+            text-align: left;               
         }
 
-        /* --- ÜBER MICH TEXT (GANZ UNTEN) --- */
+        /* --- ÜBER MICH TEXT --- */
         .about-text { 
             font-family: "Times New Roman", Times, serif;
-            color: #555;                    /* Etwas weicheres Grau für Fließtext */
-            font-size: 18px;                /* Angenehme Lesegröße */
-            line-height: 1.6;               /* Höherer Zeilenabstand für bessere Lesbarkeit */
-            text-align: left;               /* Linksbündiger Fließtext */
+            color: #555;                    
+            font-size: 18px;                
+            line-height: 1.6;               
+            text-align: left;               
             margin-top: 20px;
+            margin-bottom: 30px; /* Mehr Abstand nach unten zum Button */
+        }
+
+        /* --- CV BUTTON STYLING --- */
+        .cv-button-container {
+            text-align: left; /* Richtet den Button linksbündig aus, passend zum Text */
+        }
+
+        .cv-button {
+            display: inline-block;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;                   /* Textfarbe im Button */
+            background-color: #222;         /* Hintergrundfarbe des Buttons (Edles Dunkelgrau/Schwarz) */
+            padding: 12px 24px;             /* Innenabstand (oben/unten links/rechts) */
+            text-decoration: none;          /* Entfernt den typischen Unterstrich von Links */
+            border-radius: 6px;             /* Leicht abgerundete Ecken für den Button */
+            transition: background-color 0.2s ease; /* Macht den Farbwechsel beim Drüberfahren geschmeidig */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Hover-Effekt: Wenn man mit der Maus über den Button fährt */
+        .cv-button:hover {
+            background-color: #555;         /* Button wird etwas heller beim Drüberfahren */
+            cursor: pointer;
         }
     </style>
 </head>
@@ -84,8 +110,18 @@
         
         <div class="profile-row">
             <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
-            
             <div class="job-title">Engineer @ BMW</div>
         </div>
         
-        <p class="about-text
+        <p class="about-text">
+            Hier entsteht meine persönliche Website. Der "Über mich"-Text wird in Kürze definiert. Schau bald wieder vorbei, um mehr über meine Projekte und meine Arbeit zu erfahren!
+        </p>
+
+        <div class="cv-button-container">
+            <a href="cv_winnecke.pdf" target="_blank" class="cv-button">Lebenslauf / CV ansehen</a>
+        </div>
+        
+    </div>
+
+</body>
+</html>
