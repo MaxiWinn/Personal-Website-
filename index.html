@@ -115,7 +115,6 @@
 
         /* --- CV & CONTACT BUTTONS --- */
         .cv-contact-container {
-            text-align: left; /* Richtet die Buttons linksbündig aus */
             display: flex;
             gap: 12px;
             align-items: center;
@@ -124,6 +123,8 @@
         }
 
         .cv-button, .contact-button {
+            flex: 1;
+            min-width: 120px;
             display: inline-block;
             font-family: "Times New Roman", Times, serif;
             font-size: 16px;
@@ -136,7 +137,8 @@
             transition: background-color 0.2s ease; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             border: none;
-            white-space: nowrap;  /* prevent text wrap */
+            white-space: nowrap;
+            text-align: center;
         }
 
         .cv-button:hover, .contact-button:hover {
@@ -146,8 +148,14 @@
 
         /* on small screens stack buttons */
         @media (max-width:600px) {
-          .cv-contact-container { flex-direction: column; align-items: stretch; }
-          .cv-button, .contact-button { width: 100%; }
+          .cv-contact-container { 
+            flex-direction: column; 
+            align-items: stretch; 
+          }
+          .cv-button, .contact-button { 
+            width: 100%;
+            flex: none;
+          }
         }
 
         /* --- NEWS SPEZIFISCH (früher Blog) --- */
@@ -259,14 +267,19 @@
             }
             h1 {
                 font-size: 28px;
+                text-align: center;  /* center heading on tablet */
+                margin-bottom: 20px;
             }
             .profile-row {
                 flex-direction: column;  /* stack image and title vertically */
                 text-align: center;
                 gap: 12px;
+                justify-content: center;  /* center items */
+                margin-bottom: 16px;
             }
             .job-title {
                 font-size: 18px;
+                text-align: center;
             }
             .about-text {
                 font-size: 16px;
@@ -282,6 +295,7 @@
             }
             .blog-title {
                 font-size: 20px;
+                text-align: center;  /* center blog title */
             }
         }
 
@@ -299,6 +313,13 @@
             h1 {
                 font-size: 24px;
                 margin-bottom: 14px;
+                text-align: center;  /* center name on phone */
+            }
+            .profile-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                justify-content: center;
             }
             .profile-img {
                 width: calc(var(--profile-img-size) * 0.65);
@@ -306,18 +327,25 @@
             }
             .job-title {
                 font-size: 16px;
+                text-align: center;
             }
             .about-text {
                 font-size: 15px;
                 margin-bottom: 18px;
+                text-align: center;  /* center text on phone */
+            }
+            .cv-contact-container {
+                width: 100%;
             }
             .cv-button, .contact-button {
                 font-size: 14px;
-                padding: 10px 18px;
+                padding: 10px 16px;
+                min-width: 100px;
             }
             .blog-title {
                 font-size: 18px;
                 margin-bottom: 10px;
+                text-align: center;  /* center blog title */
             }
             .post-title {
                 font-size: 15px;
