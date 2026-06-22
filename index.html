@@ -141,6 +141,12 @@
             cursor: pointer;
         }
 
+        /* on small screens stack buttons */
+        @media (max-width:600px) {
+          .cv-contact-container { flex-direction: column; align-items: stretch; }
+          .cv-button, .contact-button { width: 100%; }
+        }
+
         /* --- NEWS SPEZIFISCH (früher Blog) --- */
         .blog-title {
             font-size: 24px;
@@ -159,7 +165,7 @@
             justify-content: flex-start; /* default: start at top */
         }
 
-        /* center when a single post — toggled via JS by adding .single-post */
+        /* center when a single post �� toggled via JS by adding .single-post */
         .post-list.single-post {
             justify-content: center;
         }
@@ -258,6 +264,23 @@
         }
         .send-button:hover { background:#444; }
 
+        /* toast notification */
+        .toast {
+          position: fixed;
+          right: 16px;
+          top: 16px;
+          background: rgba(0,0,0,0.85);
+          color: #fff;
+          padding: 10px 14px;
+          border-radius: 8px;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+          display: none;
+          z-index: 3000;
+          max-width: 320px;
+          font-size: 14px;
+        }
+        .toast.show { display: block; }
+
         /* --- RESPONSIVE: AUFEINANDERSTAPELN AUF KLEINEREN BILDSCHIRMEN --- */
         @media (max-width: 900px) {
             .wrapper {
@@ -316,7 +339,6 @@
 
             <!--
                 Die Beiträge werden dynamisch aus der Datei data/posts.json geladen.
-                Pfad: data/posts.json (relativ zu index.html)
             -->
 
             <ul class="post-list" aria-live="polite">
@@ -356,12 +378,14 @@
       </div>
     </div>
 
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
     <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts and the contact form.</noscript>
 
     <script>
       // --- Hinweise für Anpassungen ---
-      // Die News/Blog-Einträge findest du in: data/posts.json (relativ zu index.html)
-      // Struktur (mindestens): [{ title, url, date, excerpt, author? }, ...]
+      // The news/blog entries are in: data/posts.json (relative to index.html)
+      // Structure: [{ title, url, date, excerpt, author? }, ...]
 
       fetch('data/posts.json')
         .then(response => {
@@ -373,12 +397,12 @@
           if (!ul) return;
 
           if (!Array.isArray(posts) || posts.length === 0) {
-            // Zeige die Fehlermeldung, falls keine Posts vorhanden sind
+            // show error message if no posts
             document.getElementById('blog-error').style.display = 'block';
             return;
           }
 
-          // Erzeuge die Listeneinträge
+          // generate list items
           ul.innerHTML = posts.map(p => {
             const title = p.title || 'Untitled post';
             const url = p.url || '#';
@@ -390,7 +414,7 @@
             return `\n          <li class="post">\n            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n            <p class="post-meta">${date}${author}${read ? ` • ${read}` : ''}</p>\n            <p class="post-excerpt">${excerpt}</p>\n            <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n          </li>\n        `;
           }).join('');
 
-          // If there's only a single post, center it vertically to give the box better visual balance
+          // center when single post
           if (posts.length === 1) {
             ul.classList.add('single-post');
           } else {
@@ -407,10 +431,16 @@
       const modal = document.getElementById('contact-modal');
       const closeBtn = document.getElementById('close-contact');
       const form = document.getElementById('contact-form');
+      const toast = document.getElementById('toast');
+
+      function showToast(msg, ms = 4000) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), ms);
+      }
 
       openBtn.addEventListener('click', () => {
         modal.classList.add('show');
-        // focus the first input
         document.getElementById('cf-name').focus();
       });
       closeBtn.addEventListener('click', () => modal.classList.remove('show'));
@@ -425,14 +455,13 @@
 
         // basic validation
         if (!name || !from || !subject || !message) {
-          alert('Please fill all fields.');
+          showToast('Please fill all fields.');
           return;
         }
 
-        // construct recipient without placing it in the HTML
-        const user = 'max.winnecke';
-        const domain = 'icloud.com';
-        const recipient = user + '@' + domain;
+        // stronger obfuscation: build recipient from char codes (not plaintext in source)
+        const codes = [109,97,120,46,119,105,110,110,101,99,107,101,64,105,99,108,111,117,100,46,99,111,109];
+        const recipient = String.fromCharCode.apply(null, codes);
 
         // build mailto link
         const mailtoSubject = encodeURIComponent(subject);
@@ -444,11 +473,12 @@
 
         const mailto = 'mailto:' + recipient + '?subject=' + mailtoSubject + '&body=' + mailtoBody;
 
-        // open user's mail client (opens compose window) — recipient not shown on page itself
+        // open user's mail client (compose window)
         window.location.href = mailto;
 
-        // close modal afterwards
+        // close modal and show confirmation toast in English
         modal.classList.remove('show');
+        showToast('A new email has been opened in your mail application. Please send the message to complete.');
       });
     </script>
 
