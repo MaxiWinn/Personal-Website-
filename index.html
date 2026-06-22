@@ -301,7 +301,7 @@
             const author = p.author ? ` • ${p.author}` : '';
             const read = p.read ? p.read : '';
 
-            return `\n          <li class="post">\n            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n            <p class="post-meta">${date}${author}</p>\n            <p class="post-excerpt">${excerpt}</p>\n            <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">${read || 'Read'}</a>\n          </li>\n        `;
+            return `\n          <li class="post">\n            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n            <p class="post-meta">${date}${author}${read ? ` • ${read}` : ''}</p>\n            <p class="post-excerpt">${excerpt}</p>\n            <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n          </li>\n        `;
           }).join('');
         })
         .catch(err => {
