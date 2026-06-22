@@ -11,13 +11,15 @@
            --wrapper-max-width: max. Gesamtbreite der Seite
            --card-padding: Innenabstand der Karten
            --profile-img-size: Durchmesser des Profilbilds
-           --card-flex: Verhältnis der Boxbreiten (Profile und News jeweils gleich)
+           --card-flex-profile: Verhältnis der Profile-Box
+           --card-flex-news: Verhältnis der News-Box
            ----------------------------------------- */
         :root{
             --wrapper-max-width: 1200px; /* Erhöhe oder verringere hier die Gesamtbreite */
             --card-padding: 36px;        /* Innenabstand der weißen Boxen */
             --profile-img-size: 200px;  /* Größe des Profilbilds (px) — vergrößert */
-            --card-flex: 1;             /* beide Boxen haben das gleiche Flex-Verhältnis */
+            --card-flex-profile: 1.3;   /* Profile box slightly larger */
+            --card-flex-news: 0.7;      /* News box slightly smaller */
         }
 
         /* --- ALLGEMEINE SEITENEINSTELLUNGEN --- */
@@ -49,17 +51,16 @@
             padding: var(--card-padding);                  
             border-radius: 12px;            
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            flex: var(--card-flex);         /* sorgt dafür, dass beide Boxen gleiche Breite bekommen */
             box-sizing: border-box;
             min-width: 300px;              /* verhindert zu kleines Zusammenziehen */
         }
 
-        /* --- PROFILE & NEWS: beide Boxen gleich groß --- */
+        /* --- PROFILE & NEWS: unterschiedliche Breiten --- */
         .profile-card {
-            flex: var(--card-flex); /* gleiche Breite wie News */
+            flex: var(--card-flex-profile); /* slightly larger */
         }
         .blog-card {
-            flex: var(--card-flex); /* gleiche Breite wie Profil */
+            flex: var(--card-flex-news); /* slightly smaller */
             display: flex;
             flex-direction: column; /* allow content to stretch vertically */
         }
@@ -165,7 +166,7 @@
             justify-content: flex-start; /* default: start at top */
         }
 
-        /* center when a single post �� toggled via JS by adding .single-post */
+        /* center when a single post toggled via JS by adding .single-post */
         .post-list.single-post {
             justify-content: center;
         }
@@ -185,6 +186,15 @@
             color: #1c1c1c;
             margin: 0;
             font-size: 16px;
+        }
+
+        .post-title a {
+            color: #1c1c1c;
+            text-decoration: none;
+        }
+
+        .post-title a:hover {
+            text-decoration: underline;
         }
 
         .post-meta {
@@ -409,9 +419,15 @@
             const date = p.date ? p.date : '';
             const excerpt = p.excerpt ? p.excerpt : '';
             const author = p.author ? ` • ${p.author}` : '';
-            const read = p.read ? p.read : '';
+            const read = p.read ? ` • ${p.read}` : '';
 
-            return `\n          <li class="post">\n            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n            <p class="post-meta">${date}${author}${read ? ` • ${read}` : ''}</p>\n            <p class="post-excerpt">${excerpt}</p>\n            <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n          </li>\n        `;
+            return `
+          <li class="post">
+            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>
+            <p class="post-meta">${date}${author}${read}</p>
+            <p class="post-excerpt">${excerpt}</p>
+          </li>
+            `;
           }).join('');
 
           // center when single post
