@@ -37,7 +37,7 @@
         .wrapper {
             display: flex;
             gap: 24px;
-            align-items: flex-start;
+            align-items: stretch; /* ensure both cards keep equal height */
             max-width: var(--wrapper-max-width);
             width: 90%;
             box-sizing: border-box;
@@ -60,6 +60,8 @@
         }
         .blog-card {
             flex: var(--card-flex); /* gleiche Breite wie Profil */
+            display: flex;
+            flex-direction: column; /* allow content to stretch vertically */
         }
 
         /* --- HAUPTÜBERSCHRIFT --- */
@@ -144,11 +146,23 @@
             margin: 0;
             padding: 0;
             list-style: none;
+
+            /* make the list grow to fill the blog-card height */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* default: start at top */
+        }
+
+        /* center when a single post — toggled via JS by adding .single-post */
+        .post-list.single-post {
+            justify-content: center;
         }
 
         .post {
             padding: 12px 0;
             border-bottom: 1px solid #eee;
+            max-width: 100%;
         }
 
         .post:last-child {
@@ -203,6 +217,10 @@
             .profile-img {
                 width: calc(var(--profile-img-size) * 0.75);
                 height: calc(var(--profile-img-size) * 0.75);
+            }
+            /* keep post list behavior sensible on small screens */
+            .post-list {
+                justify-content: flex-start;
             }
         }
     </style>
@@ -303,6 +321,13 @@
 
             return `\n          <li class="post">\n            <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n            <p class="post-meta">${date}${author}${read ? ` • ${read}` : ''}</p>\n            <p class="post-excerpt">${excerpt}</p>\n            <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n          </li>\n        `;
           }).join('');
+
+          // If there's only a single post, center it vertically to give the box better visual balance
+          if (posts.length === 1) {
+            ul.classList.add('single-post');
+          } else {
+            ul.classList.remove('single-post');
+          }
         })
         .catch(err => {
           console.error(err);
