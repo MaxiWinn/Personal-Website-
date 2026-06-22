@@ -32,7 +32,7 @@
             margin: 0;                      
             background-color: #f4f4f9;      
             color: #333;                    
-            padding: 30px 0;
+            padding: 20px 10px;  /* reduced padding for mobile */
         }
 
         /* --- WRAPPER FÜR BEIDE BOXEN (PROFIL + NEWS) --- */
@@ -41,7 +41,7 @@
             gap: 24px;
             align-items: stretch; /* ensure both cards keep equal height */
             max-width: var(--wrapper-max-width);
-            width: 90%;
+            width: 100%;
             box-sizing: border-box;
         }
 
@@ -120,6 +120,7 @@
             gap: 12px;
             align-items: center;
             margin-top: 6px;
+            flex-wrap: wrap;  /* allow wrapping on small screens */
         }
 
         .cv-button, .contact-button {
@@ -135,6 +136,7 @@
             transition: background-color 0.2s ease; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             border: none;
+            white-space: nowrap;  /* prevent text wrap */
         }
 
         .cv-button:hover, .contact-button:hover {
@@ -175,6 +177,7 @@
             padding: 12px 0;
             border-bottom: 1px solid #eee;
             max-width: 100%;
+            word-wrap: break-word;  /* prevent overflow on mobile */
         }
 
         .post:last-child {
@@ -191,6 +194,7 @@
         .post-title a {
             color: #1c1c1c;
             text-decoration: none;
+            word-break: break-word;  /* handle long URLs */
         }
 
         .post-title a:hover {
@@ -296,22 +300,86 @@
             .wrapper {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
             }
             .card {
-                width: 90%;
-                max-width: 700px;
+                width: 100%;
+                max-width: 100%;
+                padding: calc(var(--card-padding) * 0.75);  /* reduced padding on tablet */
             }
-            .blog-card {
-                max-width: 700px;
+            .profile-card, .blog-card {
+                flex: none;  /* don't use flex ratios on mobile */
+            }
+            h1 {
+                font-size: 28px;
+            }
+            .profile-row {
+                flex-direction: column;  /* stack image and title vertically */
+                text-align: center;
+                gap: 12px;
+            }
+            .job-title {
+                font-size: 18px;
+            }
+            .about-text {
+                font-size: 16px;
             }
             /* Für sehr kleine Bildschirme das Profilbild proportional verkleinern */
             .profile-img {
-                width: calc(var(--profile-img-size) * 0.75);
-                height: calc(var(--profile-img-size) * 0.75);
+                width: calc(var(--profile-img-size) * 0.85);
+                height: calc(var(--profile-img-size) * 0.85);
             }
             /* keep post list behavior sensible on small screens */
             .post-list {
                 justify-content: flex-start;
+            }
+            .blog-title {
+                font-size: 20px;
+            }
+        }
+
+        /* --- EXTRA SMALL SCREENS (phones) --- */
+        @media (max-width: 480px) {
+            :root {
+                --card-padding: 20px;  /* smaller padding for phones */
+            }
+            body {
+                padding: 10px 8px;
+            }
+            .wrapper {
+                gap: 16px;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 14px;
+            }
+            .profile-img {
+                width: calc(var(--profile-img-size) * 0.65);
+                height: calc(var(--profile-img-size) * 0.65);
+            }
+            .job-title {
+                font-size: 16px;
+            }
+            .about-text {
+                font-size: 15px;
+                margin-bottom: 18px;
+            }
+            .cv-button, .contact-button {
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+            .blog-title {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            .post-title {
+                font-size: 15px;
+            }
+            .post-meta {
+                font-size: 12px;
+            }
+            .post-excerpt {
+                font-size: 14px;
             }
         }
     </style>
@@ -327,7 +395,7 @@
                 <!-- Profilbild: Datei 'profilbild.png' im gleichen Ordner wie index.html -->
                 <!-- Ändere die Bilddatei hier oder passe --profile-img-size oben an, um die Größe zu verändern -->
                 <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
-                <div class="job-title"> Industrial Engineer @ BMW</div>
+                <div class="job-title">Industrial Engineer @ BMW</div>
             </div>
             
             <p class="about-text">
@@ -337,8 +405,8 @@
             </p>
 
             <div class="cv-contact-container">
-                <a href="CV_Winnecke.pdf" target="_blank" class="cv-button"> View CV </a>
-                <button type="button" class="contact-button" id="open-contact"> Contact </button>
+                <a href="CV_Winnecke.pdf" target="_blank" class="cv-button">View CV</a>
+                <button type="button" class="contact-button" id="open-contact">Contact</button>
             </div>
         </div>
 
@@ -411,6 +479,9 @@
             document.getElementById('blog-error').style.display = 'block';
             return;
           }
+
+          // sort posts by date (newest first)
+          posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
           // generate list items
           ul.innerHTML = posts.map(p => {

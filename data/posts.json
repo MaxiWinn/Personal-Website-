@@ -1,16 +1,16 @@
 [
   {
-    "title": "Official! BEng in Industrial Engineering",
-    "date": "2026-03-15",
-    "read": "1 min",
-    "excerpt": "Today, I officially graduated with a Bachelor's in Industrial Engineering from the University of Applied Sciences Munich, achieving an overall grade of 1.3.",
-    "url": "blog/Graduation.html"
-  },
-  {
     "title": "New Role at BMW AG!",
     "date": "2026-03-16",
     "read": "1 min",
     "excerpt": "For the next half-year, I will be fully focusing on driving automation projects and scalability before heading to the University of Cambridge this fall.",
     "url": "blog/Newrole.html"
+  },
+  {
+    "title": "Official! BEng in Industrial Engineering",
+    "date": "2026-03-15",
+    "read": "1 min",
+    "excerpt": "Today, I officially graduated with a Bachelor's in Industrial Engineering from the University of Applied Sciences Munich, achieving an overall grade of 1.3.",
+    "url": "blog/Graduation.html"
   }
 ]
