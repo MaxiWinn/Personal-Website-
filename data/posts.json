@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Digital Transformation in Manufacturing",
+    "date": "2026-06-10",
+    "read": "4 min",
+    "excerpt": "Ein kurzer Einblick in erfolgreiche Automatisierungsprojekte und Best Practices, um Skalierbarkeit zu gewährleisten.",
+    "url": "blog/digital-transformation.html"
+  },
+  {
+    "title": "Lessons from Cross-border Projects",
+    "date": "2026-05-02",
+    "read": "6 min",
+    "excerpt": "Erfahrungen aus Projekten in Deutschland, Italien und den USA — kulturelle Unterschiede und wie sie Projekte beeinflussen.",
+    "url": "blog/cross-border.html"
+  },
+  {
+    "title": "Social Impact: Taste of Malawi",
+    "date": "2026-03-18",
+    "read": "3 min",
+    "excerpt": "Aktuelle Initiativen und wie technisches Know-how zur Stärkung lokaler Strukturen beitragen kann.",
+    "url": "blog/taste-of-malawi.html"
+  }
+]

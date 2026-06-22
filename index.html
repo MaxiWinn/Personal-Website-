@@ -201,7 +201,7 @@
             
             <p class="about-text">
                 Industrial Engineer at BMW AG, leading global initiatives in process automation and scalable digital transformation.
-                My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing for postgraduate stud[...]
+                My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing [...]
                 In parallel, I am dedicated to social impact as Vice Chairman of the Taste of Malawi NGO, contributing to sustainable development initiatives.
             </p>
 
@@ -214,30 +214,36 @@
         <aside class="card blog-card" aria-labelledby="blog-heading">
             <h2 id="blog-heading" class="blog-title">Blog</h2>
 
-            <ul class="post-list">
-                <li class="post">
-                    <p class="post-title">Digital Transformation in Manufacturing</p>
-                    <p class="post-meta">Jun 10, 2026 • 4 min read</p>
-                    <p class="post-excerpt">Ein kurzer Einblick in erfolgreiche Automatisierungsprojekte und Best Practices, um Skalierbarkeit zu gewährleisten.</p>
-                    <a class="post-read" href="#">Weiterlesen</a>
-                </li>
-
-                <li class="post">
-                    <p class="post-title">Lessons from Cross-border Projects</p>
-                    <p class="post-meta">May 02, 2026 • 6 min read</p>
-                    <p class="post-excerpt">Erfahrungen aus Projekten in Deutschland, Italien und den USA — kulturelle Unterschiede und wie sie Projekte beeinflussen.</p>
-                    <a class="post-read" href="#">Weiterlesen</a>
-                </li>
-
-                <li class="post">
-                    <p class="post-title">Social Impact: Taste of Malawi</p>
-                    <p class="post-meta">Mar 18, 2026 • 3 min read</p>
-                    <p class="post-excerpt">Aktuelle Initiativen und wie technisches Know-how zur Stärkung lokaler Strukturen beitragen kann.</p>
-                    <a class="post-read" href="#">Weiterlesen</a>
-                </li>
+            <ul class="post-list" aria-live="polite">
+                <!-- Posts are loaded dynamically from data/posts.json -->
             </ul>
+
+            <div id="blog-error" style="display:none;color:#888;margin-top:12px;">Keine Beiträge gefunden.</div>
         </aside>
     </div>
+
+    <noscript style="text-align:center;margin-top:12px;color:#666">Aktiviere JavaScript, um die neuesten Blogeinträge zu sehen.</noscript>
+
+    <script>
+      // Dynamically load posts from data/posts.json
+      fetch('data/posts.json')
+        .then(response => {
+          if (!response.ok) throw new Error('Posts not found');
+          return response.json();
+        })
+        .then(posts => {
+          const ul = document.querySelector('.post-list');
+          if (!ul || !Array.isArray(posts) || posts.length === 0) {
+            document.getElementById('blog-error').style.display = 'block';
+            return;
+          }
+          ul.innerHTML = posts.map(p => `\n            <li class="post">\n              <p class="post-title"><a href="${p.url}">${p.title}</a></p>\n              <p class="post-meta">${p.date} • ${p.read}</p>\n              <p class="post-excerpt">${p.excerpt}</p>\n              <a class="post-read" href="${p.url}">Weiterlesen</a>\n            </li>\n          `).join('');
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('blog-error').style.display = 'block';
+        });
+    </script>
 
 </body>
 </html>
