@@ -6,6 +6,20 @@
     <title>Maximilian Winnecke</title>
     
     <style>
+        /* -----------------------------------------
+           Einstellbare Variablen (ändert die Seite):
+           --wrapper-max-width: max. Gesamtbreite der Seite
+           --card-padding: Innenabstand der Karten
+           --profile-img-size: Durchmesser des Profilbilds
+           --card-flex: Verhältnis der Boxbreiten (Profile und News jeweils gleich)
+           ----------------------------------------- */
+        :root{
+            --wrapper-max-width: 1200px; /* Erhöhe oder verringere hier die Gesamtbreite */
+            --card-padding: 36px;        /* Innenabstand der weißen Boxen */
+            --profile-img-size: 200px;  /* Größe des Profilbilds (px) — vergrößert */
+            --card-flex: 1;             /* beide Boxen haben das gleiche Flex-Verhältnis */
+        }
+
         /* --- ALLGEMEINE SEITENEINSTELLUNGEN --- */
         body {
             font-family: "Times New Roman", Times, serif;
@@ -19,12 +33,12 @@
             padding: 30px 0;
         }
 
-        /* --- WRAPPER FÜR BEIDE BOXEN (PROFIL + BLOG) --- */
+        /* --- WRAPPER FÜR BEIDE BOXEN (PROFIL + NEWS) --- */
         .wrapper {
             display: flex;
             gap: 24px;
             align-items: flex-start;
-            max-width: 1100px;
+            max-width: var(--wrapper-max-width);
             width: 90%;
             box-sizing: border-box;
         }
@@ -32,19 +46,20 @@
         /* --- EINZELNE KARTE (WEIßE BOX) --- */
         .card {
             background: white;              
-            padding: 32px;                  
+            padding: var(--card-padding);                  
             border-radius: 12px;            
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            flex: 1;                        
+            flex: var(--card-flex);         /* sorgt dafür, dass beide Boxen gleiche Breite bekommen */
             box-sizing: border-box;
+            min-width: 300px;              /* verhindert zu kleines Zusammenziehen */
         }
 
-        /* Optional: unterschiedliche Breiten für Profil & Blog */
+        /* --- PROFILE & NEWS: beide Boxen gleich groß --- */
         .profile-card {
-            max-width: 650px;               
+            flex: var(--card-flex); /* gleiche Breite wie News */
         }
         .blog-card {
-            max-width: 420px;               
+            flex: var(--card-flex); /* gleiche Breite wie Profil */
         }
 
         /* --- HAUPTÜBERSCHRIFT --- */
@@ -68,8 +83,8 @@
 
         /* --- PROFILBILD --- */
         .profile-img {
-            width: 130px;                   
-            height: 130px;                  
+            width: var(--profile-img-size);                   
+            height: var(--profile-img-size);                  
             border-radius: 50%;             
             object-fit: cover;              
             border: 2px solid #333;         
@@ -90,7 +105,7 @@
             color: #555;                    
             font-size: 18px;                
             line-height: 1.6;               
-            text-align: justify;               
+            text-align: justify;            
             margin-top: 14px;
             margin-bottom: 26px; /* Mehr Abstand nach unten zum Button */
         }
@@ -119,7 +134,7 @@
             cursor: pointer;
         }
 
-        /* --- BLOG SPEZIFISCH --- */
+        /* --- NEWS SPEZIFISCH (früher Blog) --- */
         .blog-title {
             font-size: 24px;
             margin: 0 0 12px 0;
@@ -184,6 +199,11 @@
             .blog-card {
                 max-width: 700px;
             }
+            /* Für sehr kleine Bildschirme das Profilbild proportional verkleinern */
+            .profile-img {
+                width: calc(var(--profile-img-size) * 0.75);
+                height: calc(var(--profile-img-size) * 0.75);
+            }
         }
     </style>
 </head>
@@ -195,6 +215,8 @@
             <h1>Maximilian Winnecke</h1>
             
             <div class="profile-row">
+                <!-- Profilbild: Datei 'profilbild.png' im gleichen Ordner wie index.html -->
+                <!-- Ändere die Bilddatei hier oder passe --profile-img-size oben an, um die Größe zu verändern -->
                 <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
                 <div class="job-title"> Industrial Engineer @ BMW</div>
             </div>
@@ -210,9 +232,31 @@
             </div>
         </div>
 
-        <!-- Blog-Karte -->
-        <aside class="card blog-card" aria-labelledby="blog-heading">
-            <h2 id="blog-heading" class="blog-title">Blog</h2>
+        <!-- News-Karte (früher Blog) -->
+        <aside class="card blog-card" aria-labelledby="news-heading">
+            <!-- "Blog" umbenannt in "News" -->
+            <h2 id="news-heading" class="blog-title">News</h2>
+
+            <!--
+                Die Beiträge werden dynamisch aus der Datei data/posts.json geladen.
+                Pfad: data/posts.json (relativ zu index.html)
+
+                Beispiel: data/posts.json
+                [
+                  { "title": "Mein erster Beitrag", "url": "posts/1.html", "date": "2026-06-01", "excerpt": "Kurzbeschreibung...", "author": "Max" },
+                  { "title": "Update zur NGO", "url": "posts/2.html", "date": "2026-05-12", "excerpt": "Wir haben..." }
+                ]
+
+                Wo findest du die Einträge?
+                - Lege die JSON-Datei unter data/posts.json ab im gleichen Verzeichnis wie index.html (Ordner 'data').
+                - Alternativ: ändere den fetch-Pfad in der Skriptsektion weiter unten, wenn du die Beiträge an einem anderen Ort speichern möchtest (z.B. ein CMS-Endpunkt).
+
+                Anpassungen im Code:
+                - Grösse des Profilbilds: ändere --profile-img-size oben im :root.
+                - Gesamtbreite der Seite: ändere --wrapper-max-width.
+                - Abstand/Innenabstand der Karten: --card-padding.
+                - Wenn du willst, dass die News-Box schmaler oder breiter ist als das Profil, ändere --card-flex auf unterschiedliche Werte (z.B. profile 1.2, news 1) und passe CSS entsprechend.
+            -->
 
             <ul class="post-list" aria-live="polite">
                 <!-- Posts are loaded dynamically from data/posts.json -->
@@ -222,10 +266,16 @@
         </aside>
     </div>
 
-    <noscript style="text-align:center;margin-top:12px;color:#666">Aktiviere JavaScript, um die neuesten Blogeinträge zu sehen.</noscript>
+    <noscript style="text-align:center;margin-top:12px;color:#666">Aktiviere JavaScript, um die neuesten News-Einträge zu sehen.</noscript>
 
     <script>
-      // Dynamically load posts from data/posts.json
+      // --- Hinweise für Anpassungen ---
+      // Die News/Blog-Einträge findest du in: data/posts.json (relativ zu index.html)
+      // Struktur (mindestens): [{ title, url, date, excerpt, author? }, ...]
+      // Wenn du z.B. ein CMS oder andere Quelle nutzen willst, ändere hier den fetch-Pfad.
+
+      // Beispiel: Um lokale Posts zu testen, erstelle Datei data/posts.json mit dem oben gezeigten Beispiel-Array.
+
       fetch('data/posts.json')
         .then(response => {
           if (!response.ok) throw new Error('Posts not found');
@@ -233,11 +283,25 @@
         })
         .then(posts => {
           const ul = document.querySelector('.post-list');
-          if (!ul || !Array.isArray(posts) || posts.length === 0) {
+          if (!ul) return;
+
+          if (!Array.isArray(posts) || posts.length === 0) {
+            // Zeige die Fehlermeldung, falls keine Posts vorhanden sind
             document.getElementById('blog-error').style.display = 'block';
             return;
           }
-          ul.innerHTML = posts.map(p => `\n            <li class="post">\n              <p class="post-title"><a href="${p.url}">${p.title}</a></p>\n              <p class="post-meta">${p.date} • ${p.read}</p>\n              <p class="post-excerpt">${p.excerpt}</p>\n              <a class="post-read" href="${p.url}">Weiterlesen</a>\n            </li>\n          `).join('');
+
+          // Erzeuge die Listeneinträge
+          // Du kannst hier das HTML anpassen (z.B. Button-Text, Datum-Format oder zusätzliche Felder)
+          ul.innerHTML = posts.map(p => {
+            const title = p.title || 'Unbenannter Beitrag';
+            const url = p.url || '#';
+            const date = p.date ? p.date : '';
+            const excerpt = p.excerpt ? p.excerpt : '';
+            const author = p.author ? ` • ${p.author}` : '';
+
+            return `\n            <li class="post">\n              <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n              <p class="post-meta">${date}${author}</p>\n              <p class="post-excerpt">${excerpt}</p>\n              <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n            </li>\n          `;
+          }).join('');
         })
         .catch(err => {
           console.error(err);
