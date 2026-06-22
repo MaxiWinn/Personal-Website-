@@ -225,59 +225,6 @@
             background: #f0f0f3;
         }
 
-        /* --- MODAL / CONTACT FORM STYLES --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal.show { display: flex; }
-        .modal-content {
-            background: #fff;
-            padding: 20px 22px;
-            border-radius: 10px;
-            width: 95%;
-            max-width: 520px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-        .modal h3 { margin-top: 0; }
-        .modal-close {
-            float: right;
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .form-row { margin-bottom: 12px; }
-        .form-row label { display:block; font-size: 14px; color:#333; margin-bottom:6px; }
-        .form-row input[type="text"], .form-row input[type="email"], .form-row textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            font-size: 15px;
-            box-sizing: border-box;
-        }
-        .form-row textarea { min-height: 120px; resize: vertical; }
-        .send-button {
-            background: #222;
-            color: #fff;
-            padding: 10px 16px;
-            border-radius: 8px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .send-button:hover { background:#444; }
-
         /* toast notification */
         .toast {
           position: fixed;
@@ -406,7 +353,7 @@
 
             <div class="cv-contact-container">
                 <a href="CV_Winnecke.pdf" target="_blank" class="cv-button">View CV</a>
-                <button type="button" class="contact-button" id="open-contact">Contact</button>
+                <a href="mailto:max.winnecke@icloud.com" class="contact-button">Contact</a>
             </div>
         </div>
 
@@ -427,38 +374,9 @@
         </aside>
     </div>
 
-    <!-- Contact Modal (hidden by default) -->
-    <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title">
-      <div class="modal-content">
-        <button class="modal-close" id="close-contact" aria-label="Close contact form">×</button>
-        <h3 id="contact-title">Contact</h3>
-        <form id="contact-form">
-          <div class="form-row">
-            <label for="cf-name">Name</label>
-            <input id="cf-name" name="name" type="text" required>
-          </div>
-          <div class="form-row">
-            <label for="cf-email">Your email</label>
-            <input id="cf-email" name="email" type="email" required>
-          </div>
-          <div class="form-row">
-            <label for="cf-subject">Subject</label>
-            <input id="cf-subject" name="subject" type="text" required>
-          </div>
-          <div class="form-row">
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" required></textarea>
-          </div>
-          <div style="text-align:right;margin-top:8px">
-            <button type="submit" class="send-button">Send</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts and the contact form.</noscript>
+    <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts.</noscript>
 
     <script>
       // --- Hinweise für Anpassungen ---
@@ -512,61 +430,6 @@
           console.error(err);
           document.getElementById('blog-error').style.display = 'block';
         });
-
-      // --- Contact form handling ---
-      const openBtn = document.getElementById('open-contact');
-      const modal = document.getElementById('contact-modal');
-      const closeBtn = document.getElementById('close-contact');
-      const form = document.getElementById('contact-form');
-      const toast = document.getElementById('toast');
-
-      function showToast(msg, ms = 4000) {
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), ms);
-      }
-
-      openBtn.addEventListener('click', () => {
-        modal.classList.add('show');
-        document.getElementById('cf-name').focus();
-      });
-      closeBtn.addEventListener('click', () => modal.classList.remove('show'));
-      modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
-
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        const name = document.getElementById('cf-name').value.trim();
-        const from = document.getElementById('cf-email').value.trim();
-        const subject = document.getElementById('cf-subject').value.trim();
-        const message = document.getElementById('cf-message').value.trim();
-
-        // basic validation
-        if (!name || !from || !subject || !message) {
-          showToast('Please fill all fields.');
-          return;
-        }
-
-        // stronger obfuscation: build recipient from char codes (not plaintext in source)
-        const codes = [109,97,120,46,119,105,110,110,101,99,107,101,64,105,99,108,111,117,100,46,99,111,109];
-        const recipient = String.fromCharCode.apply(null, codes);
-
-        // build mailto link
-        const mailtoSubject = encodeURIComponent(subject);
-        const mailtoBody = encodeURIComponent(
-          'Name: ' + name + '\n' +
-          'Email: ' + from + '\n\n' +
-          message
-        );
-
-        const mailto = 'mailto:' + recipient + '?subject=' + mailtoSubject + '&body=' + mailtoBody;
-
-        // open user's mail client (compose window)
-        window.location.href = mailto;
-
-        // close modal and show confirmation toast in English
-        modal.classList.remove('show');
-        showToast('A new email has been opened in your mail application. Please send the message to complete.');
-      });
     </script>
 
 </body>
