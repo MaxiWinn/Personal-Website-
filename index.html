@@ -112,12 +112,16 @@
             margin-bottom: 26px; /* Mehr Abstand nach unten zum Button */
         }
 
-        /* --- CV BUTTON STYLING --- */
-        .cv-button-container {
-            text-align: left; /* Richtet den Button linksbündig aus, passend zum Text */
+        /* --- CV & CONTACT BUTTONS --- */
+        .cv-contact-container {
+            text-align: left; /* Richtet die Buttons linksbündig aus */
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 6px;
         }
 
-        .cv-button {
+        .cv-button, .contact-button {
             display: inline-block;
             font-family: "Times New Roman", Times, serif;
             font-size: 16px;
@@ -129,9 +133,10 @@
             border-radius: 6px;             
             transition: background-color 0.2s ease; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: none;
         }
 
-        .cv-button:hover {
+        .cv-button:hover, .contact-button:hover {
             background-color: #555;         
             cursor: pointer;
         }
@@ -200,6 +205,59 @@
             background: #f0f0f3;
         }
 
+        /* --- MODAL / CONTACT FORM STYLES --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: #fff;
+            padding: 20px 22px;
+            border-radius: 10px;
+            width: 95%;
+            max-width: 520px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .modal h3 { margin-top: 0; }
+        .modal-close {
+            float: right;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .form-row { margin-bottom: 12px; }
+        .form-row label { display:block; font-size: 14px; color:#333; margin-bottom:6px; }
+        .form-row input[type="text"], .form-row input[type="email"], .form-row textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        .form-row textarea { min-height: 120px; resize: vertical; }
+        .send-button {
+            background: #222;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .send-button:hover { background:#444; }
+
         /* --- RESPONSIVE: AUFEINANDERSTAPELN AUF KLEINEREN BILDSCHIRMEN --- */
         @media (max-width: 900px) {
             .wrapper {
@@ -245,8 +303,9 @@
                 In parallel, I am dedicated to social impact as Vice Chairman of the Taste of Malawi NGO, contributing to sustainable development initiatives.
             </p>
 
-            <div class="cv-button-container">
+            <div class="cv-contact-container">
                 <a href="CV_Winnecke.pdf" target="_blank" class="cv-button"> View CV </a>
+                <button type="button" class="contact-button" id="open-contact"> Contact </button>
             </div>
         </div>
 
@@ -258,22 +317,6 @@
             <!--
                 Die Beiträge werden dynamisch aus der Datei data/posts.json geladen.
                 Pfad: data/posts.json (relativ zu index.html)
-
-                Beispiel: data/posts.json
-                [
-                  { "title": "Mein erster Beitrag", "url": "posts/1.html", "date": "2026-06-01", "excerpt": "Kurzbeschreibung...", "author": "Max" },
-                  { "title": "Update zur NGO", "url": "posts/2.html", "date": "2026-05-12", "excerpt": "Wir haben..." }
-                ]
-
-                Wo findest du die Einträge?
-                - Lege die JSON-Datei unter data/posts.json ab im gleichen Verzeichnis wie index.html (Ordner 'data').
-                - Alternativ: ändere den fetch-Pfad in der Skriptsektion weiter unten, wenn du die Beiträge an einem anderen Ort speichern möchtest (z.B. ein CMS-Endpunkt).
-
-                Anpassungen im Code:
-                - Grösse des Profilbilds: ändere --profile-img-size oben im :root.
-                - Gesamtbreite der Seite: ändere --wrapper-max-width.
-                - Abstand/Innenabstand der Karten: --card-padding.
-                - Wenn du willst, dass die News-Box schmaler oder breiter ist als das Profil, ändere --card-flex auf unterschiedliche Werte (z.B. profile 1.2, news 1) und passe CSS entsprechend.
             -->
 
             <ul class="post-list" aria-live="polite">
@@ -284,15 +327,41 @@
         </aside>
     </div>
 
-    <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts.</noscript>
+    <!-- Contact Modal (hidden by default) -->
+    <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <div class="modal-content">
+        <button class="modal-close" id="close-contact" aria-label="Close contact form">×</button>
+        <h3 id="contact-title">Contact</h3>
+        <form id="contact-form">
+          <div class="form-row">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="cf-email">Your email</label>
+            <input id="cf-email" name="email" type="email" required>
+          </div>
+          <div class="form-row">
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" name="subject" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" required></textarea>
+          </div>
+          <div style="text-align:right;margin-top:8px">
+            <button type="submit" class="send-button">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts and the contact form.</noscript>
 
     <script>
       // --- Hinweise für Anpassungen ---
       // Die News/Blog-Einträge findest du in: data/posts.json (relativ zu index.html)
       // Struktur (mindestens): [{ title, url, date, excerpt, author? }, ...]
-      // Wenn du z.B. ein CMS oder andere Quelle nutzen willst, ändere hier den fetch-Pfad.
-
-      // Beispiel: Um lokale Posts zu testen, erstelle Datei data/posts.json mit dem oben gezeigten Beispiel-Array.
 
       fetch('data/posts.json')
         .then(response => {
@@ -310,7 +379,6 @@
           }
 
           // Erzeuge die Listeneinträge
-          // Du kannst hier das HTML anpassen (z.B. Button-Text, Datum-Format oder zusätzliche Felder)
           ul.innerHTML = posts.map(p => {
             const title = p.title || 'Untitled post';
             const url = p.url || '#';
@@ -333,6 +401,55 @@
           console.error(err);
           document.getElementById('blog-error').style.display = 'block';
         });
+
+      // --- Contact form handling ---
+      const openBtn = document.getElementById('open-contact');
+      const modal = document.getElementById('contact-modal');
+      const closeBtn = document.getElementById('close-contact');
+      const form = document.getElementById('contact-form');
+
+      openBtn.addEventListener('click', () => {
+        modal.classList.add('show');
+        // focus the first input
+        document.getElementById('cf-name').focus();
+      });
+      closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+      modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const from = document.getElementById('cf-email').value.trim();
+        const subject = document.getElementById('cf-subject').value.trim();
+        const message = document.getElementById('cf-message').value.trim();
+
+        // basic validation
+        if (!name || !from || !subject || !message) {
+          alert('Please fill all fields.');
+          return;
+        }
+
+        // construct recipient without placing it in the HTML
+        const user = 'max.winnecke';
+        const domain = 'icloud.com';
+        const recipient = user + '@' + domain;
+
+        // build mailto link
+        const mailtoSubject = encodeURIComponent(subject);
+        const mailtoBody = encodeURIComponent(
+          'Name: ' + name + '\n' +
+          'Email: ' + from + '\n\n' +
+          message
+        );
+
+        const mailto = 'mailto:' + recipient + '?subject=' + mailtoSubject + '&body=' + mailtoBody;
+
+        // open user's mail client (opens compose window) — recipient not shown on page itself
+        window.location.href = mailto;
+
+        // close modal afterwards
+        modal.classList.remove('show');
+      });
     </script>
 
 </body>
