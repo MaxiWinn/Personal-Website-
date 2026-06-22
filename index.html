@@ -12,27 +12,46 @@
             display: flex;                  
             justify-content: center;        
             align-items: center;            
-            height: 100vh;                  
+            min-height: 100vh;                  
             margin: 0;                      
             background-color: #f4f4f9;      
             color: #333;                    
+            padding: 30px 0;
         }
 
-        /* --- DIE WEISSE BANNER-BOX --- */
-        .container {
+        /* --- WRAPPER FÜR BEIDE BOXEN (PROFIL + BLOG) --- */
+        .wrapper {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            max-width: 1100px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        /* --- EINZELNE KARTE (WEIßE BOX) --- */
+        .card {
             background: white;              
-            padding: 40px;                  
+            padding: 32px;                  
             border-radius: 12px;            
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            flex: 1;                        
+            box-sizing: border-box;
+        }
+
+        /* Optional: unterschiedliche Breiten für Profil & Blog */
+        .profile-card {
             max-width: 650px;               
-            width: 90%;                     
+        }
+        .blog-card {
+            max-width: 420px;               
         }
 
         /* --- HAUPTÜBERSCHRIFT --- */
         h1 { 
             font-family: "Times New Roman", Times, serif;
             margin-top: 0;                  
-            margin-bottom: 25px;            
+            margin-bottom: 18px;            
             font-size: 32px;                
             text-align: left;               
             border-bottom: 1px solid #eee;  
@@ -44,7 +63,7 @@
             display: flex;                  
             align-items: center;            
             gap: 20px;                      
-            margin-bottom: 25px;            
+            margin-bottom: 20px;            
         }
 
         /* --- PROFILBILD --- */
@@ -72,8 +91,8 @@
             font-size: 18px;                
             line-height: 1.6;               
             text-align: justify;               
-            margin-top: 20px;
-            margin-bottom: 30px; /* Mehr Abstand nach unten zum Button */
+            margin-top: 14px;
+            margin-bottom: 26px; /* Mehr Abstand nach unten zum Button */
         }
 
         /* --- CV BUTTON STYLING --- */
@@ -86,43 +105,138 @@
             font-family: "Times New Roman", Times, serif;
             font-size: 16px;
             font-weight: bold;
-            color: white;                   /* Textfarbe im Button */
-            background-color: #222;         /* Hintergrundfarbe des Buttons (Edles Dunkelgrau/Schwarz) */
-            padding: 12px 24px;             /* Innenabstand (oben/unten links/rechts) */
-            text-decoration: none;          /* Entfernt den typischen Unterstrich von Links */
-            border-radius: 6px;             /* Leicht abgerundete Ecken für den Button */
-            transition: background-color 0.2s ease; /* Macht den Farbwechsel beim Drüberfahren geschmeidig */
+            color: white;                   
+            background-color: #222;         
+            padding: 12px 24px;             
+            text-decoration: none;          
+            border-radius: 6px;             
+            transition: background-color 0.2s ease; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Hover-Effekt: Wenn man mit der Maus über den Button fährt */
         .cv-button:hover {
-            background-color: #555;         /* Button wird etwas heller beim Drüberfahren */
+            background-color: #555;         
             cursor: pointer;
+        }
+
+        /* --- BLOG SPEZIFISCH --- */
+        .blog-title {
+            font-size: 24px;
+            margin: 0 0 12px 0;
+        }
+
+        .post-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .post {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post-title {
+            font-weight: bold;
+            color: #1c1c1c;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .post-meta {
+            color: #888;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .post-excerpt {
+            color: #555;
+            margin-top: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .post-read {
+            display: inline-block;
+            margin-top: 10px;
+            color: #222;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 6px 10px;
+            background: #f0f0f3;
+        }
+
+        /* --- RESPONSIVE: AUFEINANDERSTAPELN AUF KLEINEREN BILDSCHIRMEN --- */
+        @media (max-width: 900px) {
+            .wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 90%;
+                max-width: 700px;
+            }
+            .blog-card {
+                max-width: 700px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <h1>Maximilian Winnecke</h1>
-        
-        <div class="profile-row">
-            <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
-            <div class="job-title">Engineer @ BMW</div>
-        </div>
-        
-        <p class="about-text">
-            Industrial Engineer at BMW AG, leading global initiatives in process automation and scalable digital transformation.
-My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing for postgraduate studies at the University of Cambridge.
-In parallel, I am dedicated to social impact as Vice Chairman of the Taste of Malawi NGO, contributing to sustainable development initiatives.
-        </p>
+    <div class="wrapper">
+        <!-- Profil-Karte -->
+        <div class="card profile-card">
+            <h1>Maximilian Winnecke</h1>
+            
+            <div class="profile-row">
+                <img src="profilbild.png" alt="Maximilian Winnecke" class="profile-img">
+                <div class="job-title">Engineer @ BMW</div>
+            </div>
+            
+            <p class="about-text">
+                Industrial Engineer at BMW AG, leading global initiatives in process automation and scalable digital transformation.
+                My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing for postgraduate stud[...]
+                In parallel, I am dedicated to social impact as Vice Chairman of the Taste of Malawi NGO, contributing to sustainable development initiatives.
+            </p>
 
-        <div class="cv-button-container">
-            <a href="CV_Winnecke.pdf" target="_blank" class="cv-button"> View CV </a>
+            <div class="cv-button-container">
+                <a href="CV_Winnecke.pdf" target="_blank" class="cv-button"> View CV </a>
+            </div>
         </div>
-        
+
+        <!-- Blog-Karte -->
+        <aside class="card blog-card" aria-labelledby="blog-heading">
+            <h2 id="blog-heading" class="blog-title">Blog</h2>
+
+            <ul class="post-list">
+                <li class="post">
+                    <p class="post-title">Digital Transformation in Manufacturing</p>
+                    <p class="post-meta">Jun 10, 2026 • 4 min read</p>
+                    <p class="post-excerpt">Ein kurzer Einblick in erfolgreiche Automatisierungsprojekte und Best Practices, um Skalierbarkeit zu gewährleisten.</p>
+                    <a class="post-read" href="#">Weiterlesen</a>
+                </li>
+
+                <li class="post">
+                    <p class="post-title">Lessons from Cross-border Projects</p>
+                    <p class="post-meta">May 02, 2026 • 6 min read</p>
+                    <p class="post-excerpt">Erfahrungen aus Projekten in Deutschland, Italien und den USA — kulturelle Unterschiede und wie sie Projekte beeinflussen.</p>
+                    <a class="post-read" href="#">Weiterlesen</a>
+                </li>
+
+                <li class="post">
+                    <p class="post-title">Social Impact: Taste of Malawi</p>
+                    <p class="post-meta">Mar 18, 2026 • 3 min read</p>
+                    <p class="post-excerpt">Aktuelle Initiativen und wie technisches Know-how zur Stärkung lokaler Strukturen beitragen kann.</p>
+                    <a class="post-read" href="#">Weiterlesen</a>
+                </li>
+            </ul>
+        </aside>
     </div>
 
 </body>
