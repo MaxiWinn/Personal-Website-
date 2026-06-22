@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -262,11 +262,11 @@
                 <!-- Posts are loaded dynamically from data/posts.json -->
             </ul>
 
-            <div id="blog-error" style="display:none;color:#888;margin-top:12px;">Keine Beiträge gefunden.</div>
+            <div id="blog-error" style="display:none;color:#888;margin-top:12px;">No posts found.</div>
         </aside>
     </div>
 
-    <noscript style="text-align:center;margin-top:12px;color:#666">Aktiviere JavaScript, um die neuesten News-Einträge zu sehen.</noscript>
+    <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts.</noscript>
 
     <script>
       // --- Hinweise für Anpassungen ---
@@ -294,13 +294,13 @@
           // Erzeuge die Listeneinträge
           // Du kannst hier das HTML anpassen (z.B. Button-Text, Datum-Format oder zusätzliche Felder)
           ul.innerHTML = posts.map(p => {
-            const title = p.title || 'Unbenannter Beitrag';
+            const title = p.title || 'Untitled post';
             const url = p.url || '#';
             const date = p.date ? p.date : '';
             const excerpt = p.excerpt ? p.excerpt : '';
             const author = p.author ? ` • ${p.author}` : '';
 
-            return `\n            <li class="post">\n              <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n              <p class="post-meta">${date}${author}</p>\n              <p class="post-excerpt">${excerpt}</p>\n              <a class="post-read" href="${url}" target="_blank" rel="noopener noreferrer">Read</a>\n            </li>\n          `;
+            return `\n            <li class="post">\n              <p class="post-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>\n              <p class="post-[...]
           }).join('');
         })
         .catch(err => {
