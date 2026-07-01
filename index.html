@@ -122,7 +122,7 @@
             flex-wrap: wrap;  /* allow wrapping on small screens */
         }
 
-        .cv-button, .contact-button {
+        .cv-button, .contact-button, .playgio-button {
             
             min-width: 100px;
             display: inline-block;
@@ -139,11 +139,21 @@
             border: none;
             white-space: nowrap;
             text-align: center;
+            cursor: pointer;
         }
 
-        .cv-button:hover, .contact-button:hover {
+        .cv-button:hover, .contact-button:hover, .playgio-button:hover {
             background-color: #555;         
             cursor: pointer;
+        }
+
+        /* PlayGio Button - Spezialstil */
+        .playgio-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .playgio-button:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a91 100%);
         }
 
         /* on small screens stack buttons */
@@ -152,7 +162,7 @@
             flex-direction: column; 
             align-items: stretch; 
           }
-          .cv-button, .contact-button { 
+          .cv-button, .contact-button, .playgio-button { 
             width: 100%;
             flex: none;
           }
@@ -337,7 +347,7 @@
             .cv-contact-container {
                 width: 100%;
             }
-            .cv-button, .contact-button {
+            .cv-button, .contact-button, .playgio-button {
                 font-size: 14px;
                 padding: 10px 16px;
                 min-width: 100px;
@@ -375,13 +385,14 @@
             
             <p class="about-text">
                 Industrial Engineer at BMW AG, leading global initiatives in process automation and scalable digital transformation.
-                My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing for my MPhil at the University of Cambridge.
+                My academic journey across Munich and Milan, combined with corporate strategy experience in the United States, has shaped a strong international outlook. I am currently preparing for m[...]
                 In parallel, I am dedicated to social impact as Vice Chairman of the Taste of Malawi NGO, contributing to sustainable development initiatives.
             </p>
 
             <div class="cv-contact-container">
                 <a href="CV_Winnecke.pdf" target="_blank" class="cv-button">View CV</a>
                 <a href="mailto:max.winnecke@icloud.com" class="contact-button">Contact</a>
+                <button class="playgio-button" onclick="launchPlayGio()">⚓ PlayGio.AI</button>
             </div>
         </div>
 
@@ -405,6 +416,9 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <noscript style="text-align:center;margin-top:12px;color:#666">Enable JavaScript to see the latest news posts.</noscript>
+
+    <!-- PlayGio.AI Frontend Script -->
+    <script src="playgio-frontend.js"></script>
 
     <script>
       // --- Hinweise für Anpassungen ---
